@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5G Pil Optimizasyonu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #0b0e14;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 24px;
+            padding: 40px 20px;
+            width: 100%;
+            max-width: 360px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        h2 {
+            font-size: 20px;
+            color: #e6edf3;
+            margin-bottom: 8px;
+        }
+
+        p.sub-text {
+            font-size: 13px;
+            color: #8b949e;
+            margin-bottom: 35px;
+        }
+
+        /* Daire Alanı */
+        .circle-container {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 35px auto;
+            cursor: pointer;
+        }
+
+        .circle-svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+
+        .circle-bg {
+            fill: none;
+            stroke: #21262d;
+            stroke-width: 12;
+        }
+
+        .circle-progress {
+            fill: none;
+            stroke: #00e676;
+            stroke-width: 12;
+            stroke-dasharray: 502;
+            stroke-dashoffset: 502;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.1s linear;
+        }
+
+        .circle-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .percent {
+            font-size: 32px;
+            font-weight: bold;
+            color: #00e676;
+        }
+
+        .btn-text {
+            font-size: 13px;
+            color: #8b949e;
+            margin-top: 4px;
+        }
+
+        /* Gizli Sürpriz Ekranı */
+        .joke-card {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+
+        .joke-card h1 {
+            color: #ff4d4d;
+            font-size: 26px;
+            margin-bottom: 12px;
+        }
+
+        .joke-card p {
+            font-size: 18px;
+            color: #c9d1d9;
+        }
+
+        .highlight {
+            color: #58a6ff;
+            font-weight: bold;
+            font-size: 22px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="mainContainer">
+        
+        <!-- Optimilasyon Arayüzü -->
+        <div id="optSection">
+            <h2>5G Pil Optimizasyonu</h2>
+            <p class="sub-text">Batarya ömrünü artırmak için daireye dokunun</p>
+
+            <div class="circle-container" onclick="startOptimization()">
+                <svg class="circle-svg">
+                    <circle class="circle-bg" cx="90" cy="90" r="80"></circle>
+                    <circle class="circle-progress" id="progressCircle" cx="90" cy="90" r="80"></circle>
+                </svg>
+                <div class="circle-content">
+                    <span class="percent" id="percentText">%0</span>
+                    <span class="btn-text" id="statusText">BAŞLAT</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1 Nisan Sürprizi -->
+        <div class="joke-card" id="jokeSection">
+            <div style="font-size: 50px; margin-bottom: 10px;">🤡</div>
+            <h1>1 NİSAN KUTLU OLSUN!</h1>
+            <p><span class="highlight">Uras</span> sizi şakaladı!</p>
+        </div>
+
+    </div>
+
+    <script>
+        let isRunning = false;
+
+        function startOptimization() {
+            if (isRunning) return;
+            isRunning = true;
+
+            const circle = id('progressCircle');
+            const percentText = id('percentText');
+            const statusText = id('statusText');
+            
+            statusText.innerText = "Optimize ediliyor...";
+            
+            let percent = 0;
+            const maxOffset = 502; // Daire çevresi
+
+            const interval = setInterval(() => {
+                percent++;
+                percentText.innerText = `%${percent}`;
+                
+                // İlerleme çubuğunu güncelle
+                const offset = maxOffset - (percent / 100) * maxOffset;
+                circle.style.strokeDashoffset = offset;
+
+                if (percent >= 100) {
+                    clearInterval(interval);
+                    
+                    // Ekranı değiştir
+                    setTimeout(() => {
+                        id('optSection').style.display = 'none';
+                        id('jokeSection').style.display = 'block';
+                    }, 400);
+                }
+            }, 30); // Hızı buradan ayarlayabilirsin (30ms)
+        }
+
+        function id(e) { return document.getElementById(e); }
+    </script>
+
+</body>
+</html>
